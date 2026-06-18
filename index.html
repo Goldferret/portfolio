@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gabriel Ferrer — Data Scientist & ML Researcher</title>
+<meta name="description" content="Gabriel Ferrer — data scientist and ML researcher at UTSA. Building interpretable ML systems, multi-agent LLM tools, and applied data pipelines. Open to data science and ML engineering roles.">
+<meta property="og:title" content="Gabriel Ferrer — Data Scientist & ML Researcher">
+<meta property="og:description" content="Interpretable ML, multi-agent robotics, and applied data pipelines. Best Poster Award, ACM/IEEE SEC 2025.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ─────────────────────────────────────────── */
+:root {
+  --cream:        #FAF7F2;
+  --cream-dark:   #F2EDE4;
+  --sand:         #C4A882;
+  --sand-light:   #E8DDD0;
+  --sand-divider: #DDD3C4;
+  --text:         #2C2C2C;
+  --text-muted:   #6B6860;
+  --text-faint:   #A09B94;
+  --green:        #4A7C59;
+  --green-hover:  #3A6347;
+  --green-bg:     #EDF3EF;
+
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans:  'Inter', system-ui, sans-serif;
+  --font-mono:  'JetBrains Mono', monospace;
+
+  --text-xs:   clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --text-sm:   clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-lg:   clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+  --text-xl:   clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+  --text-2xl:  clamp(2rem, 1.2rem + 2.5vw, 3.5rem);
+  --text-hero: clamp(2.75rem, 1rem + 5vw, 5rem);
+
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  --content: 860px;
+  --content-wide: 1100px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ─── BASE ───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  color: var(--text);
+  background: var(--cream);
+  line-height: 1.65;
+}
+img { display: block; max-width: 100%; height: auto; }
+p { max-width: 68ch; text-wrap: pretty; }
+h1, h2, h3, h4 { text-wrap: balance; line-height: 1.2; }
+a {
+  color: var(--green);
+  text-decoration: none;
+  transition: color 160ms var(--ease-out);
+}
+a:hover { color: var(--green-hover); text-decoration: underline; text-underline-offset: 3px; }
+::selection { background: color-mix(in oklch, var(--green) 18%, var(--cream)); }
+:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+
+/* ─── LAYOUT ─────────────────────────────────────────── */
+.container {
+  max-width: var(--content);
+  margin-inline: auto;
+  padding-inline: clamp(var(--space-5), 5vw, var(--space-12));
+}
+.container--wide { max-width: var(--content-wide); }
+
+/* ─── NAV ────────────────────────────────────────────── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: color-mix(in oklch, var(--cream) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--sand-divider);
+  padding-block: var(--space-4);
+}
+.nav-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-8);
+}
+.nav-name {
+  font-family: var(--font-serif);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: 0.01em;
+  text-decoration: none;
+}
+.nav-name:hover { color: var(--green); text-decoration: none; }
+.nav-links {
+  display: flex;
+  gap: var(--space-6);
+  list-style: none;
+}
+.nav-links a {
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.nav-links a:hover { color: var(--green); text-decoration: none; }
+
+/* ─── DIVIDER ────────────────────────────────────────── */
+.divider {
+  border: none;
+  border-top: 1px solid var(--sand-divider);
+  margin-block: 0;
+}
+
+/* ─── SECTION SHARED ─────────────────────────────────── */
+section { padding-block: clamp(var(--space-12), 7vw, var(--space-24)); }
+.section-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--space-8);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.section-label::before {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  background: var(--sand);
+}
+.section-heading {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: var(--space-8);
+  letter-spacing: -0.01em;
+}
+
+/* ─── HERO ───────────────────────────────────────────── */
+#hero {
+  padding-block: clamp(var(--space-16), 10vw, var(--space-24)) clamp(var(--space-12), 7vw, var(--space-20));
+}
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: var(--space-5);
+}
+.hero-name {
+  font-family: var(--font-serif);
+  font-size: var(--text-hero);
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: var(--space-6);
+  letter-spacing: -0.01em;
+}
+.hero-name em {
+  font-style: italic;
+  color: var(--green);
+}
+.hero-bio {
+  font-size: var(--text-lg);
+  font-weight: 300;
+  color: var(--text-muted);
+  max-width: 56ch;
+  line-height: 1.6;
+  margin-bottom: var(--space-10);
+}
+.hero-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-6);
+  align-items: center;
+}
+.hero-link {
+  font-size: var(--text-sm);
+  font-weight: 400;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  transition: color 160ms var(--ease-out);
+}
+.hero-link:hover { color: var(--green); text-decoration: none; }
+.hero-link svg { opacity: 0.5; transition: opacity 160ms; }
+.hero-link:hover svg { opacity: 1; }
+.hero-link--primary {
+  color: var(--green);
+  font-weight: 500;
+}
+.hero-link--primary:hover { color: var(--green-hover); }
+
+/* ─── NOW ────────────────────────────────────────────── */
+#now { padding-block: clamp(var(--space-10), 5vw, var(--space-16)); }
+.now-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-10) var(--space-16);
+}
+.now-item-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-3);
+}
+.now-item-text {
+  font-size: var(--text-base);
+  color: var(--text);
+  line-height: 1.55;
+}
+.now-item-text strong { font-weight: 500; }
+.availability-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--green);
+  background: var(--green-bg);
+  padding: var(--space-2) var(--space-4);
+  border-radius: 2px;
+  margin-top: var(--space-3);
+  letter-spacing: 0.04em;
+}
+.availability-badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+/* ─── WORK ───────────────────────────────────────────── */
+#work {}
+.work-list { display: flex; flex-direction: column; }
+.work-entry {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--space-8) var(--space-16);
+  padding-block: clamp(var(--space-8), 4vw, var(--space-12));
+  border-top: 1px solid var(--sand-divider);
+  transition: background 200ms var(--ease-out);
+}
+.work-entry:last-child { border-bottom: 1px solid var(--sand-divider); }
+.work-entry:hover { background: color-mix(in oklch, var(--sand-light) 30%, transparent); }
+.work-meta {}
+.work-number {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+  margin-bottom: var(--space-3);
+}
+.work-year {
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+  font-weight: 400;
+  display: block;
+  margin-top: var(--space-3);
+}
+.work-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: var(--text-faint);
+  border: 1px solid var(--sand-divider);
+  padding: 2px var(--space-3);
+  border-radius: 1px;
+}
+.work-content {}
+.work-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: var(--space-4);
+  letter-spacing: -0.01em;
+}
+.work-desc {
+  font-size: var(--text-base);
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin-bottom: var(--space-4);
+  max-width: 60ch;
+}
+.work-outcome {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  background: var(--cream-dark);
+  border-left: 2px solid var(--sand);
+  margin-bottom: var(--space-5);
+}
+.work-outcome-text {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+.work-outcome-text strong {
+  color: var(--text);
+  font-weight: 500;
+}
+.work-figure {
+  margin-top: var(--space-5);
+}
+.work-figure img {
+  width: 100%;
+  max-width: 480px;
+  border: 1px solid var(--sand-divider);
+  background: #fff;
+}
+.work-caption {
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+  margin-top: var(--space-3);
+  max-width: 52ch;
+  line-height: 1.5;
+}
+.work-link {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--green);
+}
+.work-link:hover { text-decoration: none; color: var(--green-hover); }
+.work-link-arrow { transition: transform 200ms var(--ease-out); }
+.work-link:hover .work-link-arrow { transform: translateX(3px); }
+
+/* ─── PUBLICATIONS ───────────────────────────────────── */
+#publications { background: var(--cream-dark); }
+.pub-list { display: flex; flex-direction: column; gap: var(--space-6); }
+.pub-entry {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-4) var(--space-8);
+  align-items: start;
+}
+.pub-badge {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--green);
+  background: var(--green-bg);
+  border: 1px solid color-mix(in oklch, var(--green) 25%, var(--cream));
+  padding: var(--space-2) var(--space-3);
+  white-space: nowrap;
+  border-radius: 1px;
+  letter-spacing: 0.04em;
+}
+.pub-badge--pending {
+  color: var(--text-faint);
+  background: var(--cream-dark);
+  border-color: var(--sand-divider);
+}
+.pub-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: var(--space-2);
+  line-height: 1.4;
+}
+.pub-meta {
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+  line-height: 1.5;
+}
+
+/* ─── ABOUT ──────────────────────────────────────────── */
+#about {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-16);
+  align-items: start;
+  padding-block: clamp(var(--space-12), 7vw, var(--space-24));
+}
+.about-text { }
+.about-heading {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  margin-bottom: var(--space-6);
+  color: var(--text);
+}
+.about-body {
+  font-size: var(--text-base);
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: var(--space-5);
+}
+.about-aside { }
+.aside-block {
+  margin-bottom: var(--space-8);
+}
+.aside-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-faint);
+  margin-bottom: var(--space-3);
+}
+.aside-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.aside-list li {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.aside-list li::before {
+  content: '';
+  width: 4px; height: 4px;
+  background: var(--sand);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ─── CONTACT / FOOTER ───────────────────────────────── */
+footer {
+  border-top: 1px solid var(--sand-divider);
+  padding-block: clamp(var(--space-10), 5vw, var(--space-16));
+}
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-8);
+  flex-wrap: wrap;
+}
+.footer-name {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: var(--space-2);
+}
+.footer-tagline {
+  font-size: var(--text-sm);
+  color: var(--text-faint);
+  max-width: 38ch;
+  line-height: 1.5;
+}
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  align-items: flex-end;
+}
+.footer-link {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.footer-link:hover { color: var(--green); text-decoration: none; }
+.footer-note {
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--sand-divider);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+/* ─── SCROLL REVEALS ─────────────────────────────────── */
+.fade-in { opacity: 1; }
+@supports (animation-timeline: scroll()) {
+  .fade-in {
+    opacity: 0;
+    animation: reveal-fade linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 80%;
+  }
+  @keyframes reveal-fade { to { opacity: 1; } }
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────────── */
+@media (max-width: 700px) {
+  .now-grid { grid-template-columns: 1fr; }
+  .work-entry { grid-template-columns: 1fr; }
+  #about { grid-template-columns: 1fr; }
+  .footer-inner { flex-direction: column; }
+  .footer-links { align-items: flex-start; }
+  .nav-links { display: none; }
+  .pub-entry { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══════════════════════════════════════════ -->
+<nav>
+  <div class="container nav-inner">
+    <a href="#" class="nav-name">Gabriel Ferrer</a>
+    <ul class="nav-links">
+      <li><a href="#now">Now</a></li>
+      <li><a href="#work">Projects</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══════════════════════════════════════════ -->
+<section id="hero">
+  <div class="container">
+    <p class="hero-eyebrow">Data Scientist &amp; ML Researcher — San Antonio, TX</p>
+    <h1 class="hero-name">Gabriel<br><em>Alexander</em> Ferrer</h1>
+    <p class="hero-bio">
+      Building interpretable ML systems, LLM-enabled research workflows, and applied data pipelines. Incoming M.S. in Mathematics at UTSA.
+    </p>
+    <div class="hero-links">
+      <a href="mailto:gabe.a.ferrer@gmail.com" class="hero-link hero-link--primary">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        gabe.a.ferrer@gmail.com
+      </a>
+      <a href="https://github.com/Goldferret" target="_blank" rel="noopener" class="hero-link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+        github.com/Goldferret
+      </a>
+      <a href="https://www.linkedin.com/in/gabriel-ferrer-299743276/" target="_blank" rel="noopener" class="hero-link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        linkedin.com/in/gabriel-ferrer
+      </a>
+      <a href="#" class="hero-link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+        Resume PDF
+      </a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══ NOW ════════════════════════════════════════════ -->
+<section id="now">
+  <div class="container">
+    <p class="section-label">Currently</p>
+    <div class="now-grid">
+      <div class="now-item fade-in">
+        <p class="now-item-label">Status</p>
+        <p class="now-item-text">
+          <strong>B.S. in CS &amp; Mathematics of Data and Computing, UTSA, May 2026.</strong>
+          Incoming M.S. in Mathematics, Fall 2026.
+        </p>
+        <span class="availability-badge">Open to roles</span>
+      </div>
+      <div class="now-item fade-in">
+        <p class="now-item-label">Looking for</p>
+        <p class="now-item-text">
+          Data science, ML engineering, NLP, and applied analytics roles — <strong>local to San Antonio</strong> or fully remote.
+        </p>
+      </div>
+      <div class="now-item fade-in">
+        <p class="now-item-label">Active research</p>
+        <p class="now-item-text">
+          Extending Beacon for journal submission; multi-agent robotics with MCP tool integration; NLP analysis of human–AI interaction patterns.
+        </p>
+      </div>
+      <div class="now-item fade-in">
+        <p class="now-item-label">Building</p>
+        <p class="now-item-text">
+          LLM-assisted research infrastructure: multi-agent orchestration, automated session logging, and structured documentation pipelines.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══ WORK ═══════════════════════════════════════════ -->
+<section id="work">
+  <div class="container">
+    <p class="section-label">Projects</p>
+    <div class="work-list">
+
+      <!-- BEACON -->
+      <article class="work-entry fade-in">
+        <div class="work-meta">
+          <p class="work-number">01</p>
+          <span class="work-year">2024–2025</span>
+          <div class="work-tags">
+            <span class="tag">Interpretable ML</span>
+            <span class="tag">Remote Sensing</span>
+            <span class="tag">Edge AIoT</span>
+          </div>
+        </div>
+        <div class="work-content">
+          <h2 class="work-title">Beacon: Interpretable Land-Use Classification for Edge AIoT</h2>
+          <p class="work-desc">
+            Designed and executed a 750-experiment ML benchmark comparing interpretable vs. black-box classifiers on remote sensing data derived from Landsat&nbsp;8 imagery, SoilGrids, and topographic products via Google Earth Engine. Identified a previously undocumented failure mode through rigorous statistical analysis.
+          </p>
+          <div class="work-outcome">
+            <p class="work-outcome-text">
+              <strong>Best Poster Award</strong> — ACM/IEEE Symposium on Edge Computing (SEC), December 2025.
+              Full journal paper under co-author review, 2026.
+            </p>
+          </div>
+          <a href="#publications" class="work-link">
+            View publication
+            <svg class="work-link-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- ROBOTICS -->
+      <article class="work-entry fade-in">
+        <div class="work-meta">
+          <p class="work-number">02</p>
+          <span class="work-year">2025–Present</span>
+          <div class="work-tags">
+            <span class="tag">Multi-agent LLM</span>
+            <span class="tag">Robotics</span>
+            <span class="tag">MCP Protocol</span>
+          </div>
+        </div>
+        <div class="work-content">
+          <h2 class="work-title">Tri-Agent LLM System for Autonomous Robotics</h2>
+          <p class="work-desc">
+            Architected a three-agent LLM orchestration system with 53 MCP tools — spanning Python, Docker, and REST APIs — enabling natural-language-driven autonomous experiment execution on physical DOFBot hardware. Coordinated real-time multi-robot task execution across two robot arms.
+          </p>
+          <div class="work-outcome">
+            <p class="work-outcome-text">
+              <strong>Demonstrated live</strong> at a full-day MEDAL grant workshop (Argonne National Labs deliverable) for 20+ attendees. Delivered technical lectures on ROS foundations and AI agent architecture.
+            </p>
+          </div>
+          <a href="#" class="work-link">
+            Notes in progress
+            <svg class="work-link-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- USDA -->
+      <article class="work-entry fade-in">
+        <div class="work-meta">
+          <p class="work-number">03</p>
+          <span class="work-year">2024–2025</span>
+          <div class="work-tags">
+            <span class="tag">Data Engineering</span>
+            <span class="tag">Geospatial</span>
+            <span class="tag">Random Forest</span>
+          </div>
+        </div>
+        <div class="work-content">
+          <h2 class="work-title">Costa Rica National Land-Use Visualization System</h2>
+          <p class="work-desc">
+            Built Costa Rica's first national land-use visualization system processing 101K georeferenced forest inventory plots across 7 classification categories. Designed the full ELT pipeline: raw inventory cleaning, 31 engineered spectral/topographic/soil features, and downstream Random Forest classification at ~80% accuracy.
+          </p>
+          <div class="work-outcome">
+            <p class="work-outcome-text">
+              <strong>Delivered to USDA Forest Service</strong> stakeholders at the Purdue Data Mine Corporate Partners Symposium. First-of-its-kind geospatial dashboard for Costa Rica national inventory.
+            </p>
+          </div>
+          <a href="#" class="work-link">
+            Read case study
+            <svg class="work-link-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+
+    </div>
+    <div style="margin-top: var(--space-8);">
+      <a href="/work/" class="work-link">
+        All projects
+        <svg class="work-link-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+<section id="publications">
+  <div class="container">
+    <p class="section-label">Publications</p>
+    <div class="pub-list">
+      <div class="pub-entry fade-in">
+        <span class="pub-badge">Best Poster Award</span>
+        <div>
+          <p class="pub-title">Beacon: Interpretable Land-Use Classification for Edge AIoT via Information Lattice Learning</p>
+          <p class="pub-meta">G. A. Ferrer, J. L. Reed, A. S. Tosun, T. Korkmaz — <em>ACM/IEEE Symposium on Edge Computing (SEC)</em>, December 2025. <strong>Best Poster Award</strong> — selected from ~60 submitted posters.</p>
+        </div>
+      </div>
+      <div class="pub-entry fade-in">
+        <span class="pub-badge pub-badge--pending">In Review</span>
+        <div>
+          <p class="pub-title">Beacon: Interpretable Land Use Classification via Information Lattice Learning</p>
+          <p class="pub-meta">G. A. Ferrer et al. — Submitted to <em>IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing (J-STARS)</em>, 2026.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══ ABOUT ═══════════════════════════════════════════ -->
+<section id="about" class="container">
+  <div class="about-text fade-in">
+    <h2 class="about-heading">About</h2>
+    <p class="about-body">
+      I'm a data scientist and ML researcher with a B.S. in Computer Science and Mathematics of Data and Computing from UTSA, May 2026. I work across the full research stack — from feature engineering and model benchmarking to pipeline development and stakeholder delivery.
+    </p>
+    <p class="about-body">
+      My research focuses on interpretable machine learning, remote sensing, and LLM-enabled workflows. I use AI tools as a systematic part of how I design, build, and document systems — not as a shortcut, but as a collaborator in the architecture process.
+    </p>
+    <p class="about-body">
+      Bilingual in English and Spanish. Based in San Antonio, TX, and open to remote work.
+    </p>
+  </div>
+  <div class="about-aside fade-in">
+    <div class="aside-block">
+      <p class="aside-label">Education</p>
+      <ul class="aside-list">
+        <li>B.S. CS + Mathematics of Data and Computing, UTSA</li>
+        <li>Mathematics Minor</li>
+        <li>Incoming M.S. Mathematics — UTSA, Fall 2026</li>
+      </ul>
+    </div>
+    <div class="aside-block">
+      <p class="aside-label">Focus areas</p>
+      <ul class="aside-list">
+        <li>Interpretable &amp; explainable ML</li>
+        <li>NLP &amp; behavioral analysis</li>
+        <li>Multi-agent LLM systems</li>
+        <li>Geospatial data engineering</li>
+        <li>Applied research workflows</li>
+      </ul>
+    </div>
+    <div class="aside-block">
+      <p class="aside-label">Languages</p>
+      <ul class="aside-list">
+        <li>English (native)</li>
+        <li>Spanish (native)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══ FOOTER / CONTACT ═══════════════════════════════ -->
+<footer id="contact">
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <p class="footer-name">Gabriel Alexander Ferrer</p>
+        <p class="footer-tagline">Open to data science, ML engineering, NLP, and applied analytics roles in San Antonio or remote.</p>
+      </div>
+      <div class="footer-links">
+        <a href="mailto:gabe.a.ferrer@gmail.com" class="footer-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          gabe.a.ferrer@gmail.com
+        </a>
+        <a href="https://github.com/Goldferret" target="_blank" rel="noopener" class="footer-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+          github.com/Goldferret
+        </a>
+        <a href="https://www.linkedin.com/in/gabriel-ferrer-299743276/" target="_blank" rel="noopener" class="footer-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          linkedin.com/in/gabriel-ferrer
+        </a>
+        <a href="#" class="footer-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Download Resume
+        </a>
+      </div>
+    </div>
+    <div class="footer-note">
+      <span>© 2026 Gabriel Alexander Ferrer</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
