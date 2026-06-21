@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Building a system that thinks like I do — Donna — Gabriel Ferrer</title>
+<meta name="description" content="Designing Donna v1.0: an AI-as-interface personal assistant built on Obsidian, workflow commands, and the constraint that I never want to maintain a system myself.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/portfolio/style.css">
+<style>
+.entry-header { padding-block: clamp(var(--space-12), 7vw, var(--space-20)); border-bottom: 1px solid var(--sand-divider); margin-bottom: var(--space-12); }
+.entry-project { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: var(--space-4); }
+.entry-project a { color: var(--green); }
+.entry-title { font-family: var(--font-serif); font-size: var(--text-2xl); font-weight: 400; color: var(--text); margin-bottom: var(--space-4); letter-spacing: -0.01em; }
+.entry-meta { font-size: var(--text-sm); color: var(--text-faint); }
+.entry-body { max-width: 68ch; padding-bottom: var(--space-20); }
+.entry-body p { margin-bottom: var(--space-5); color: var(--text-muted); line-height: 1.7; }
+.entry-nav { display: flex; justify-content: space-between; padding-top: var(--space-8); border-top: 1px solid var(--sand-divider); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <a href="/portfolio/" class="nav-name">Gabriel Ferrer</a>
+    <ul class="nav-links">
+      <li><a href="/portfolio/#now">Now</a></li>
+      <li><a href="/portfolio/work/">Projects</a></li>
+      <li><a href="/portfolio/#publications">Publications</a></li>
+      <li><a href="/portfolio/#about">About</a></li>
+      <li><a href="/portfolio/#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+
+  <header class="entry-header">
+    <p class="entry-project"><a href="/portfolio/work/">← All projects</a></p>
+    <h1 class="entry-title">Building a system that thinks like I do</h1>
+    <p class="entry-meta">Donna — v1.0 — January–May 2026</p>
+  </header>
+
+  <article class="entry-body">
+
+    <p>
+      The idea came out of a frustration I've had for years: I hyperfocus, lose track of time, forget emails, and then can't remember what I did last week. I'd tried productivity tools before and they all shared the same flaw — they expected me to maintain them. A todo app only works if you update it. A calendar only helps if you check it. I don't want to maintain a system. I want a system that maintains itself while I just talk.
+    </p>
+
+    <p>
+      The starting point was a question I asked in the design session: "I thought it was that I use you as my interface for talking about goals and work, and then you organize it — I never actually access the database. Is this correct?" The answer was yes, and that became the core principle: Model 1, AI as Interface. Obsidian is the database — a queryable vault with structured metadata on every note — but I never open it directly. Everything goes through conversation.
+    </p>
+
+    <p>
+      The first design challenge was figuring out what the system actually needed to do. After a deep interview session covering goals, work style, memory patterns, and how I handle conflict, we built a profile that shaped every subsequent decision. I'm an idea-driven, passive thinker — I don't actively recall, I wait for things to surface. I hyperfocus, which is a strength and a liability simultaneously. I need visible, quantifiable progress or I lose motivation. And I process things through dialogue, not monologue — which is exactly what makes an AI assistant a natural fit rather than just a tool.
+    </p>
+
+    <p>
+      The workflow command system came from recognizing that some interactions needed complex, structured prompts to be useful — not ad-hoc conversation. <code>@todos</code> generates a weekly list from tracked commitments, <code>@reflect</code> processes the day's work against what was planned, <code>@review</code> produces a quantified weekly summary. The commands are just shorthand for injecting those prompts, and they store their outputs back into Obsidian behind the scenes.
+    </p>
+
+    <p>
+      One design decision that almost went wrong: early on the system was supposed to check in with me proactively after three hours of work. I pushed back when I realized the architecture didn't support unprompted output — there's no background process, no scheduler. The fix was to build elapsed time tracking into the daily notes instead. During any workflow run, I can check how long I've been in a session. It's less automatic, but it fits what the system can actually do, and I learned that working within real constraints beats designing around imaginary ones.
+    </p>
+
+    <p>
+      The noun-tagging architecture — flagging people, places, ideas, projects, and organizations as queryable metadata — came from a specific cognitive constraint I mentioned: I remember ideas and places well but struggle with names after time passes. The system needed to support queries like "what did I work on related to ACWC?" or "what happened at UTSA last semester?" not "what did I do with Jeremy in March?" That shaped the entire tagging taxonomy.
+    </p>
+
+    <p>
+      The system ran daily from late January through May 2026 — morning briefs, todo generation, weekly reviews, project logging. What worked well: the Obsidian-as-database architecture, the workflow commands, the context continuity across sessions. What needed rethinking: the morning fleet scaling issues, the subagent coordination failures, and the EA behavioral layer — which became v2.0.
+    </p>
+
+  </article>
+
+  <nav class="entry-nav">
+    <span></span>
+    <a href="/portfolio/work/donna/ea-reframe.html" class="work-link">
+      Next: v2.0 — The EA reframe
+      <svg class="work-link-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </nav>
+
+</div>
+
+<footer style="margin-top: var(--space-10);">
+  <div class="container">
+    <div class="footer-note">
+      <span>© 2026 Gabriel Alexander Ferrer</span>
+      <a href="/portfolio/" class="footer-link">← Home</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
