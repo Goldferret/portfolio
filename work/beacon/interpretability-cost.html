@@ -62,6 +62,11 @@
       ILL didn't demonstrate the small-data efficiency from digit recognition. Ensemble methods outperformed it at every sample size, no crossover point. But the aggregate numbers masked something more interesting.
     </p>
 
+    <figure class="entry-figure">
+      <img src="/portfolio/work/beacon/learning-curves.svg" alt="Learning curves showing ILL plateauing near 34% accuracy while ensemble methods reach 57%, with no crossover point across sample sizes 10–125 per class.">
+      <figcaption>Learning curves across five models and six sample sizes (10–125 per class). ILL gains only 5pp across a 12.5× increase in training data, plateauing near 34%, while XGBoost and Random Forest improve by ~15pp. No crossover point detected.</figcaption>
+    </figure>
+
     <p>
       Looking at the per-class breakdown and the confusion matrices, ILL was systematically over-predicting Wetlands across every other class — Agriculture, Forest plantation, Grasslands. XGBoost's Agriculture→Wetlands confusion was dropping with more training data; ILL's was growing. By the largest sample size, ILL was confusing Agriculture as Wetlands 35% of the time versus XGBoost's 10%. That bias gets worse as data increases rather than correcting, which means it's structural, not a learning artifact. We traced it to the <code>max_order=2</code> constraint — ILL's rules reference two features at a time to stay cognitively tractable, but distinguishing Agriculture from Wetlands in this feature space needs joint conditions on at least three simultaneously. Two-predicate rules conflate them.
     </p>
