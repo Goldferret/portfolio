@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The EA reframe — Donna — Gabriel Ferrer</title>
+<meta name="description" content="Redesigning Donna v2.0: GTD schema, focus filter, morning fleet, and the behavioral architecture of a proactive executive assistant.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/portfolio/style.css">
+<style>
+.entry-header { padding-block: clamp(var(--space-12), 7vw, var(--space-20)); border-bottom: 1px solid var(--sand-divider); margin-bottom: var(--space-12); }
+.entry-project { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: var(--space-4); }
+.entry-project a { color: var(--green); }
+.entry-title { font-family: var(--font-serif); font-size: var(--text-2xl); font-weight: 400; color: var(--text); margin-bottom: var(--space-4); letter-spacing: -0.01em; }
+.entry-meta { font-size: var(--text-sm); color: var(--text-faint); }
+.entry-body { max-width: 68ch; padding-bottom: var(--space-20); }
+.entry-body p { margin-bottom: var(--space-5); color: var(--text-muted); line-height: 1.7; }
+.entry-body code { font-family: var(--font-mono); font-size: 0.875em; background: var(--cream-dark); padding: 1px 4px; }
+.entry-nav { display: flex; justify-content: space-between; padding-top: var(--space-8); border-top: 1px solid var(--sand-divider); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <a href="/portfolio/" class="nav-name">Gabriel Ferrer</a>
+    <ul class="nav-links">
+      <li><a href="/portfolio/#now">Now</a></li>
+      <li><a href="/portfolio/work/">Projects</a></li>
+      <li><a href="/portfolio/#publications">Publications</a></li>
+      <li><a href="/portfolio/#about">About</a></li>
+      <li><a href="/portfolio/#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+
+  <header class="entry-header">
+    <p class="entry-project"><a href="/portfolio/work/">← All projects</a></p>
+    <h1 class="entry-title">The EA reframe</h1>
+    <p class="entry-meta">Donna — v2.0 — May 2026</p>
+  </header>
+
+  <article class="entry-body">
+
+    <p>
+      The v1 system worked. Morning briefs ran, todos generated, emails scanned. But somewhere around month three, the pattern became clear: I was still the one managing the system. I had to remember to run <code>@todos</code>. I had to notice when something needed capturing. The AI was organized and responsive — it just wasn't proactive.
+    </p>
+
+    <p>
+      The reframe came from a conversation with Perplexity about why this was happening. The answer came from cognitive psychology: what I was experiencing has a name — prospective memory failure. The breakdown of intention-to-act when there's no external cue at the moment of execution. A personal assistant that waits to be asked is still fundamentally the same as a todo app. I needed something closer to how a real executive assistant operates: someone who captures without being asked, who surfaces the right thing at the right boundary, who maintains context across sessions without having to be reminded of it.
+    </p>
+
+    <p>
+      The architecture needed to change in three ways.
+    </p>
+
+    <p>
+      The first was the schema. v1 used a loose daily note system with no real data model underneath. v2 introduced a proper GTD schema: individual notes with frontmatter for ticklers, waiting-for items, agenda items, and someday-maybe. Each type is now queryable independently — <code>obsidian_query(where={"type": "tickler", "status": "pending"})</code> returns exactly what it sounds like. The system can now answer "what's overdue?" or "what am I waiting on from a collaborator?" from structured data rather than prose scanning.
+    </p>
+
+    <p>
+      The second was the focus filter. The focus spec (<code>focus-spec.md</code>) and calendar (<code>calendar.md</code>) gave the system a machine-readable decision layer: Summer Sprint, Fall Semester, Winter Break, each with explicit scope rules. When something new surfaces, the system checks whether it belongs in the current phase before surfacing it. That one addition changed how context gets routed and how the todo list gets generated — scope-checking became automatic rather than something I had to do mentally.
+    </p>
+
+    <p>
+      The third was the morning fleet — something v1 didn't have at all. A launchd-scheduled headless agent runs every morning before I open a session, writes a pre-computed brief to the vault, and the main session reads it on initialization. The fleet is a coordinator of specialist skills with defined output contracts: email-scan, calendar-phase, session-journal, project-state. Each skill does one thing and returns a structured summary. I no longer open a chat to a blank slate.
+    </p>
+
+    <p>
+      The behavioral protocols — proactive task capture, waiting-for logging, topic-transition surfacing — were specified as the design target for this layer. The morning fleet implements them for session boundaries: it checks for overdue items, surfaces waiting-for threads, and pre-loads context so the session starts informed. Real-time detection during active sessions — capturing a task the moment it surfaces in conversation, without being asked — is still the open problem.
+    </p>
+
+    <p>
+      The system went live May 19, 2026. The entry in that day's log: "Designed and implemented the full Donna v2 EA system architecture."
+    </p>
+
+  </article>
+
+  <nav class="entry-nav">
+    <a href="/portfolio/work/donna/v1-design.html" class="work-link" style="flex-direction: row-reverse; gap: var(--space-2);">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform: rotate(180deg)"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      Previous: v1.0 — Building a system that thinks like I do
+    </a>
+    <span></span>
+  </nav>
+
+</div>
+
+<footer style="margin-top: var(--space-10);">
+  <div class="container">
+    <div class="footer-note">
+      <span>© 2026 Gabriel Alexander Ferrer</span>
+      <a href="/portfolio/" class="footer-link">← Home</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
