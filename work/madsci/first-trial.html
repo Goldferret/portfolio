@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>First Successful Robot Trial — MADSci MCP — Gabriel Ferrer</title>
+<meta name="description" content="Running the first end-to-end block sorting trial on physical DOFBOT hardware via the tri-agent system.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/portfolio/style.css">
+<style>
+.entry-header { padding-block: clamp(var(--space-12), 7vw, var(--space-20)); border-bottom: 1px solid var(--sand-divider); margin-bottom: var(--space-12); }
+.entry-project { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: var(--space-4); }
+.entry-project a { color: var(--green); }
+.entry-title { font-family: var(--font-serif); font-size: var(--text-2xl); font-weight: 400; color: var(--text); margin-bottom: var(--space-4); letter-spacing: -0.01em; }
+.entry-date { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-faint); }
+.entry-body { max-width: 68ch; padding-bottom: var(--space-20); }
+.entry-body h2 { font-family: var(--font-serif); font-size: var(--text-lg); font-weight: 400; color: var(--text); margin-top: var(--space-12); margin-bottom: var(--space-4); }
+.entry-body p { margin-bottom: var(--space-5); color: var(--text-muted); line-height: 1.7; }
+.entry-body ul { padding-left: var(--space-6); margin-bottom: var(--space-5); color: var(--text-muted); line-height: 1.7; }
+.entry-body li { margin-bottom: var(--space-2); }
+.entry-body pre { background: var(--cream-dark); border: 1px solid var(--sand-divider); padding: var(--space-5); overflow-x: auto; margin-bottom: var(--space-5); border-radius: 2px; }
+.entry-body code { font-family: var(--font-mono); font-size: 0.875em; background: var(--cream-dark); padding: 1px 4px; }
+.entry-body pre code { background: none; padding: 0; font-size: var(--text-sm); }
+.entry-nav { display: flex; justify-content: flex-start; padding-top: var(--space-8); border-top: 1px solid var(--sand-divider); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <a href="/portfolio/" class="nav-name">Gabriel Ferrer</a>
+    <ul class="nav-links">
+      <li><a href="/portfolio/#now">Now</a></li>
+      <li><a href="/portfolio/work/">Projects</a></li>
+      <li><a href="/portfolio/#publications">Publications</a></li>
+      <li><a href="/portfolio/#about">About</a></li>
+      <li><a href="/portfolio/#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+
+  <header class="entry-header">
+    <p class="entry-project"><a href="/portfolio/work/madsci/">← MADSci MCP Server</a></p>
+    <h1 class="entry-title">First Successful Robot Trial</h1>
+    <p class="entry-date">June 17, 2026</p>
+  </header>
+
+  <article class="entry-body">
+
+    <p>
+      Today the tri-agent system moved a physical robot for the first time in an autonomous experiment. Four colored blocks — two red, two blue — were placed in a detection zone in front of a DOFBOT Pro arm. The goal: sort them by color into two goal zones without any human intervention beyond pressing start.
+    </p>
+
+    <p>
+      It worked. Partially.
+    </p>
+
+    <h2>What happened</h2>
+
+    <p>
+      The Detector Agent ran a computer vision pipeline using custom HSV color thresholds, identified the blocks in the camera frame, and returned pixel coordinates and depth estimates for each detection. The Executor Agent received those detections, reasoned about which block belonged in which goal zone based on the <code>assigned_colors</code> field in the procedure, and issued pick-and-place commands to the robot arm.
+    </p>
+
+    <p>
+      The robot moved. That was the milestone.
+    </p>
+
+    <p>
+      The trial surfaced a few expected rough edges: the detection pipeline found three of the four blocks rather than all four, likely a lighting or threshold issue. The Executor initially attempted a <code>pick_and_place</code> workflow action that doesn't exist, caught its own mistake, called <code>get_node_info</code> to discover the correct action names (<code>pick_at_pixel_coords</code>, <code>place_at_pixel_coords</code>), and recovered. Two of the four blocks ended up in the correct goal zones.
+    </p>
+
+    <h2>What we learned</h2>
+
+    <p>
+      The self-correction behavior — try, fail, introspect, retry — is not a bug. It's the core behavior we're studying. In the tri-agent condition, the Executor has a narrow toolset and a pre-built detection procedure, so its failure modes are constrained and interpretable. The wasted actions from self-correction count toward our <em>redundant actions</em> metric and are part of what we compare against the single-agent and scripted baselines.
+    </p>
+
+    <p>
+      Detection reliability is the more pressing issue. A 75% detection rate (3 of 4 blocks) means some trials will fail before the robot ever picks anything up. We need to either tighten the block placement protocol or adjust the HSV thresholds for the lab lighting conditions.
+    </p>
+
+    <h2>What's next</h2>
+
+    <ul>
+      <li>Fix detection to reliably find all 4 blocks under lab lighting</li>
+      <li>Run 30 trials for the tri-agent condition to collect the experiment dataset</li>
+      <li>Build the single-agent baseline (all 48 tools, generic prompt) and run 30 trials</li>
+      <li>Build the scripted baseline and run 30 trials</li>
+      <li>Analyze: task success rate, completion rate, execution time, total actions, redundant actions, replanning events</li>
+    </ul>
+
+    <p>
+      The paper target is IROS 2026 Workshop. We have time, but the robot needs to cooperate.
+    </p>
+
+  </article>
+
+  <nav class="entry-nav">
+    <a href="/portfolio/work/madsci/" class="work-link" style="flex-direction: row-reverse; gap: var(--space-2);">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform: rotate(180deg)"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      All MADSci entries
+    </a>
+  </nav>
+
+</div>
+
+<footer style="margin-top: var(--space-10);">
+  <div class="container">
+    <div class="footer-note">
+      <span>© 2026 Gabriel Alexander Ferrer</span>
+      <a href="/portfolio/" class="footer-link">← Home</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

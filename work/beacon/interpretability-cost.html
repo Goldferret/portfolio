@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantifying what interpretability actually costs — Beacon — Gabriel Ferrer</title>
+<meta name="description" content="Designing a 750-experiment benchmark to characterize the accuracy cost of rule-based transparency in tropical land use classification.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/portfolio/style.css">
+<style>
+.entry-header { padding-block: clamp(var(--space-12), 7vw, var(--space-20)); border-bottom: 1px solid var(--sand-divider); margin-bottom: var(--space-12); }
+.entry-project { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: var(--space-4); }
+.entry-project a { color: var(--green); }
+.entry-title { font-family: var(--font-serif); font-size: var(--text-2xl); font-weight: 400; color: var(--text); margin-bottom: var(--space-4); letter-spacing: -0.01em; }
+.entry-meta { font-size: var(--text-sm); color: var(--text-faint); }
+.entry-body { max-width: 68ch; padding-bottom: var(--space-20); }
+.entry-body p { margin-bottom: var(--space-5); color: var(--text-muted); line-height: 1.7; }
+.entry-body code { font-family: var(--font-mono); font-size: 0.875em; background: var(--cream-dark); padding: 1px 4px; }
+.entry-nav { display: flex; justify-content: flex-start; padding-top: var(--space-8); border-top: 1px solid var(--sand-divider); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <a href="/portfolio/" class="nav-name">Gabriel Ferrer</a>
+    <ul class="nav-links">
+      <li><a href="/portfolio/#now">Now</a></li>
+      <li><a href="/portfolio/work/">Projects</a></li>
+      <li><a href="/portfolio/#publications">Publications</a></li>
+      <li><a href="/portfolio/#about">About</a></li>
+      <li><a href="/portfolio/#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+
+  <header class="entry-header">
+    <p class="entry-project"><a href="/portfolio/work/">← All projects</a></p>
+    <h1 class="entry-title">Quantifying what interpretability actually costs</h1>
+    <p class="entry-meta">Beacon — v1.0 — 2024–2025</p>
+  </header>
+
+  <article class="entry-body">
+
+    <p>
+      Costa Rica's forest agencies map land use across nearly 100,000 georeferenced plots, but the models that work best on this data produce decisions a field auditor can't interrogate. REDD+ and MRV frameworks require transparent, verifiable methods — the kind where a field auditor can check a prediction against what they're standing in front of. Information Lattice Learning produces those: human-readable rules referencing NDVI thresholds, elevation ranges, slope constraints. Things a forest manager already knows how to interpret.
+    </p>
+
+    <p>
+      ILL had been shown to work in digit recognition and music theory, the domains where it was specifically designed. The question was whether any of those advantages would hold in land use classification, where the six classes are spectrally similar vegetation types rather than visually distinct shapes.
+    </p>
+
+    <p>
+      The design question was how to make that tradeoff legible, not just whether it existed. We started with a two-model comparison — ILL against Random Forest — and expanded to five after conference feedback pushed for broader baselines: adding XGBoost, Stacking ensemble, and MLP, all using identical features and the same protocol. The 31 features came from Landsat 8, SoilGrids, and topographic products via Google Earth Engine, all free satellite data so the approach could generalize beyond Costa Rica. We also added four curriculum features encoding ecological domain knowledge — wetland likelihood, forest maturity, agricultural intensity, plantation signature — as binary indicators. Characterizing the gap rigorously meant 750 experiments: five models, six sample sizes from 10 to 125 per class, five seeds, five-fold stratified cross-validation.
+    </p>
+
+    <p>
+      ILL didn't demonstrate the small-data efficiency from digit recognition. Ensemble methods outperformed it at every sample size, no crossover point. But the aggregate numbers masked something more interesting.
+    </p>
+
+    <p>
+      Looking at the per-class breakdown and the confusion matrices, ILL was systematically over-predicting Wetlands across every other class — Agriculture, Forest plantation, Grasslands. XGBoost's Agriculture→Wetlands confusion was dropping with more training data; ILL's was growing. By the largest sample size, ILL was confusing Agriculture as Wetlands 35% of the time versus XGBoost's 10%. That bias gets worse as data increases rather than correcting, which means it's structural, not a learning artifact. We traced it to the <code>max_order=2</code> constraint — ILL's rules reference two features at a time to stay cognitively tractable, but distinguishing Agriculture from Wetlands in this feature space needs joint conditions on at least three simultaneously. Two-predicate rules conflate them.
+    </p>
+
+    <p>
+      A targeted ablation confirmed that removing the curriculum features doesn't fix the bias — it persists and grows with or without them. Curriculum features contribute only minor amplification at small sample sizes (6.4pp at n=50), and that contribution diminishes to near zero as data increases (0.6pp at n=125) while the bias itself keeps growing. The constraint is in the rule expressiveness, not the feature set.
+    </p>
+
+    <p>
+      That finding is what the paper is really about. Not "ILL loses to ensembles" — we already knew that going in, and so did the field. The contribution was documenting a previously undocumented failure mode, explaining exactly why it happens mechanistically, and working out where the tradeoff is actually defensible. Forest classification, where spectral distinctiveness is high enough that two-predicate rules work, is where it is: the interpretability tax narrows to 7 percentage points with sufficient data. Wetlands and Forest plantation, where it stays above 36 points with no improvement, are where it isn't.
+    </p>
+
+    <p>
+      The paper received the Best Poster Award at ACM/IEEE SEC 2025. The journal version is under review at J-STARS.
+    </p>
+
+  </article>
+
+  <nav class="entry-nav">
+    <a href="/portfolio/work/" class="work-link" style="flex-direction: row-reverse; gap: var(--space-2);">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform: rotate(180deg)"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      All projects
+    </a>
+  </nav>
+
+</div>
+
+<footer style="margin-top: var(--space-10);">
+  <div class="container">
+    <div class="footer-note">
+      <span>© 2026 Gabriel Alexander Ferrer</span>
+      <a href="/portfolio/" class="footer-link">← Home</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
