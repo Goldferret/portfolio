@@ -61,6 +61,11 @@
       The workflow command system came from recognizing that some interactions needed complex, structured prompts to be useful — not ad-hoc conversation. <code>@todos</code> generates a weekly list from tracked commitments, <code>@reflect</code> processes the day's work against what was planned, <code>@review</code> produces a quantified weekly summary. The commands are just shorthand for injecting those prompts, and they store their outputs back into Obsidian behind the scenes.
     </p>
 
+    <figure class="entry-figure">
+      <img src="/portfolio/work/donna/donna-v1-diagram.svg" alt="Architecture diagram showing Gabriel sending natural language to Donna (AI Interface), which reads and writes the Obsidian Vault. Workflow commands @todos, @reflect, and @review feed into Donna.">
+      <figcaption>Model 1: AI as Interface. Gabriel converses with Donna; Donna organizes everything in the Obsidian vault. Workflow commands are the only structured entry point — everything else is natural language.</figcaption>
+    </figure>
+
     <p>
       One design decision that almost went wrong: early on the system was supposed to check in with me proactively after three hours of work. I pushed back when I realized the architecture didn't support unprompted output — there's no background process, no scheduler. The fix was to build elapsed time tracking into the daily notes instead. During any workflow run, I can check how long I've been in a session. It's less automatic, but it fits what the system can actually do, and I learned that working within real constraints beats designing around imaginary ones.
     </p>

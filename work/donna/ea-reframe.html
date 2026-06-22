@@ -70,6 +70,11 @@
       The third was the morning fleet — something v1 didn't have at all. A launchd-scheduled headless agent runs every morning before I open a session, writes a pre-computed brief to the vault, and the main session reads it on initialization. The fleet is a coordinator of specialist skills with defined output contracts: email-scan, calendar-phase, session-journal, project-state. Each skill does one thing and returns a structured summary. I no longer open a chat to a blank slate.
     </p>
 
+    <figure class="entry-figure">
+      <img src="/portfolio/work/donna/donna-v2-diagram.svg" alt="Architecture diagram showing launchd triggering the morning fleet orchestrator, which coordinates four specialist skills (email-scan, calendar-phase, session-journal, project-state) and writes a morning brief to the Obsidian Vault.">
+      <figcaption>The morning fleet: a launchd-scheduled orchestrator coordinates four specialist skills, each with a defined output contract. The brief is pre-computed and waiting when the session starts.</figcaption>
+    </figure>
+
     <p>
       The behavioral protocols — proactive task capture, waiting-for logging, topic-transition surfacing — were specified as the design target for this layer. The morning fleet implements them for session boundaries: it checks for overdue items, surfaces waiting-for threads, and pre-loads context so the session starts informed. Real-time detection during active sessions — capturing a task the moment it surfaces in conversation, without being asked — is still the open problem.
     </p>
